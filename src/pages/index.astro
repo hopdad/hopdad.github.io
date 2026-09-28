@@ -1,26 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
-import SocialLinks from '@/components/SocialLinks.astro';
+import Marquee from '@/components/Marquee.astro';
+import Stats from '@/components/Stats.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import ProjectShowcase from '@/components/ProjectShowcase.astro';
+import Process from '@/components/Process.astro';
+import About from '@/components/About.astro';
+import Contact from '@/components/Contact.astro';
 import { site } from '@/config';
+import { getProjects } from '@/lib/projects';
 import { url } from '@/lib/url';
 
-const featured = (await getCollection('projects', ({ data }) => data.featured)).sort(
-  (a, b) => b.data.completedDate.valueOf() - a.data.completedDate.valueOf()
-);
-
-const skills = [
-  'Python',
-  'JavaScript',
-  'Machine Learning',
-  'FastAPI',
-  'Supabase',
-  'Electronics',
-  'Process Optimization',
-  'Git',
-];
+const featured = await getProjects(({ data }) => data.featured);
+const total = (await getProjects()).length;
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -29,89 +22,39 @@ const personJsonLd = {
   jobTitle: site.title,
   email: `mailto:${site.email}`,
   url: Astro.site?.toString(),
-  sameAs: [site.social.github, site.social.linkedin],
+  address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' },
+  sameAs: [site.social.github, site.social.linkedin].filter(Boolean),
 };
 ---
 
 <BaseLayout jsonLd={personJsonLd}>
   <Hero />
+  <Marquee />
+  <Stats />
 
-  <section class="container-content pb-section md:pb-section-lg">
-    <div class="mb-10 flex items-end justify-between gap-6">
-      <h2 class="font-display text-heading-lg">Featured projects</h2>
-      <a href={url('/projects')} class="link-underline text-caption uppercase tracking-widest" style="color: var(--accent);">
-        All projects →
-      </a>
-    </div>
-    <div class="grid gap-6 sm:grid-cols-2">
-      {featured.map((project) => <ProjectCard project={project} />)}
+  <section id="work" aria-labelledby="work-title" class="pb-section md:pb-section-lg">
+    <div class="container-wide">
+      <SectionHeader eyebrow="01 — Selected work" id="work-title">
+        <Fragment slot="title">Built, tested, <em>put to work.</em></Fragment>
+        Machine learning, electrical systems, engines, and the processes that keep a distribution center
+        moving — each one started with a problem worth solving.
+      </SectionHeader>
+      <div class="mt-14 md:mt-20">
+        <ProjectShowcase projects={featured} />
+      </div>
+      {
+        total > featured.length && (
+          <div class="mt-12 flex justify-center">
+            <a href={url('/projects')} class="btn btn-ghost">
+              See all {total} projects
+            </a>
+          </div>
+        )
+      }
     </div>
   </section>
 
-  <section id="about" class="container-content pb-section md:pb-section-lg">
-    <h2 class="mb-6 font-display text-heading-lg">About</h2>
-    <div class="prose-site max-w-3xl">
-      <p>
-        Over 15 years solving operational problems at one of Michigan's largest distribution
-        centers, I've developed a systematic approach to breaking down complex challenges. What
-        started as optimizing warehouse workflows has evolved into building software solutions,
-        from ML-powered fishing platforms to custom electronics projects.
-      </p>
-      <p>
-        Whether I'm debugging a Python ML pipeline or rebuilding an ATV engine, the approach is
-        the same: understand the problem, plan the solution, and execute with precision. I combine
-        traditional hands-on engineering skills with modern development practices to create
-        solutions that actually work in the real world.
-      </p>
-      <p>
-        I treat AI as a sophisticated thinking partner, not a replacement for engineering judgment.
-        It's a force multiplier that accelerates learning, improves design quality, and helps me
-        tackle problems I couldn't solve alone — from designing FishCast's ML architecture to
-        systematically debugging complex multi-layered technical issues.
-      </p>
-    </div>
-    <h3 class="mt-10 font-display text-heading-md">Working with</h3>
-    <ul class="mt-4 flex flex-wrap gap-2">
-      {skills.map((s) => (
-        <li class="rounded-btn border px-3 py-1 text-caption" style="border-color: var(--border);">
-          {s}
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section id="contact" class="container-content pb-section md:pb-section-lg">
-    <h2 class="mb-4 font-display text-heading-lg">Get in touch</h2>
-    <p class="max-w-2xl text-body-lg" style="color: var(--text-muted);">
-      Ready to solve a problem together? Whether it's building something new, optimizing an
-      existing process, or tackling a technical challenge, I'd love to hear about what you're
-      working on.
-    </p>
-    <div class="mt-8 flex flex-wrap items-center gap-6">
-      <a href={`mailto:${site.email}`} class="btn btn-primary">{site.email}</a>
-      <SocialLinks />
-    </div>
-  </section>
+  <Process />
+  <About />
+  <Contact />
 </BaseLayout>
-
-<style>
-  .link-underline {
-    position: relative;
-  }
-  .link-underline::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 180ms ease;
-  }
-  .link-underline:hover::after,
-  .link-underline:focus-visible::after {
-    transform: scaleX(1);
-  }
-</style>

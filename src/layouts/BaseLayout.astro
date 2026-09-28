@@ -1,9 +1,12 @@
 ---
 import '@/styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import SEO from '@/components/SEO.astro';
+// Preload the display faces (upright + italic) used by the header and the hero
+// headline so they swap in quickly. Other faces load on demand from global.css.
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
 
 export interface Props {
   title?: string;
@@ -17,32 +20,35 @@ const { title, description, image, type, jsonLd } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <meta name="theme-color" content="#1B3A4B" />
+    <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesItalicUrl} as="font" type="font/woff2" crossorigin />
 
     <SEO title={title} description={description} image={image} type={type} jsonLd={jsonLd} />
-    <ViewTransitions />
 
     <script is:inline>
-      // No-flash dark mode: run before first paint.
+      // No-flash theme (dark by default) + a `js` flag for scroll reveals. Runs before first paint.
       (function () {
+        var root = document.documentElement;
+        var theme = 'dark';
         try {
-          const stored = localStorage.getItem('theme');
-          const theme = stored ?? 'dark';
-          if (theme === 'dark') document.documentElement.classList.add('dark');
+          theme = localStorage.getItem('theme') || 'dark';
         } catch (e) {}
+        root.classList.toggle('dark', theme === 'dark');
+        root.classList.add('js');
       })();
     </script>
   </head>
-  <body class="flex min-h-dvh flex-col">
+  <body id="top" class="flex min-h-dvh flex-col">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-[color:var(--bg)]"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-btn focus:bg-accent-fill focus:px-4 focus:py-2 focus:text-bone"
     >
       Skip to content
     </a>
@@ -51,5 +57,8 @@ const { title, description, image, type, jsonLd } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <script>
+      import '@/scripts/motion';
+    </script>
   </body>
 </html>

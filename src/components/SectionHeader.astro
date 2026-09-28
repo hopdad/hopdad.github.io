@@ -1,0 +1,32 @@
+---
+// "01 — Selected work" kicker + large title, with optional intro copy (default slot).
+// Pass the title through the `title` slot so it can contain <em> accents.
+export interface Props {
+  eyebrow: string;
+  id?: string;
+}
+
+const { eyebrow, id } = Astro.props;
+const hasIntro = Astro.slots.has('default');
+---
+
+<header class="grid gap-8 lg:grid-cols-12 lg:items-end">
+  <div class="lg:col-span-7">
+    <p class="eyebrow" data-reveal>{eyebrow}</p>
+    <h2
+      id={id}
+      class="mt-6 font-display text-display-xl font-medium [font-variation-settings:'opsz'_144]"
+      data-reveal
+      style="--reveal-delay: 80"
+    >
+      <slot name="title" />
+    </h2>
+  </div>
+  {
+    hasIntro && (
+      <div class="text-body-lg text-muted lg:col-span-5" data-reveal style="--reveal-delay: 160">
+        <slot />
+      </div>
+    )
+  }
+</header>

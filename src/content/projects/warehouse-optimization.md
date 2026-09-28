@@ -1,10 +1,17 @@
 ---
 title: 'Warehouse Process Optimization'
 description: 'Systematic redesign of outbound dock operations at a major distribution center — reducing dock-to-truck time by 23% while maintaining a zero-incident safety record.'
-featured: false
+featured: true
 thumbnail: '../../assets/projects/warehouse-optimization.svg'
-thumbnailAlt: 'Warehouse floor plan with optimized flow arrows'
+thumbnailAlt: 'Dock floor plan comparing tangled before-routing with direct after-flows from racking to trucks, annotated with a 23% faster dock-to-truck time'
 techStack: ['Six Sigma', 'Lean Manufacturing', 'Process Analysis', 'Team Leadership']
+stats:
+  - value: '23%'
+    label: 'Faster dock-to-truck time'
+  - value: '0'
+    label: 'Safety incidents during the transition'
+  - value: '50+'
+    label: 'Store routes depending on the dock'
 completedDate: 2024-03-10
 category: 'engineering'
 ---

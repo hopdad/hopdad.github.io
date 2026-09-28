@@ -1,15 +1,118 @@
 ---
 import { site } from '@/config';
-import SocialLinks from './SocialLinks.astro';
+import { url } from '@/lib/url';
+import { getPosts } from '@/lib/blog';
+import LogoMark from './LogoMark.astro';
 
 const year = new Date().getFullYear();
+const posts = await getPosts();
+const sitemap = [
+  { href: '/', label: 'Home' },
+  ...site.nav.filter((item) => !item.requiresPosts || posts.length > 0),
+];
+const elsewhere = [
+  { href: `mailto:${site.email}`, label: 'Email' },
+  { href: site.social.github, label: 'GitHub' },
+  { href: site.social.linkedin, label: 'LinkedIn' },
+].filter((link) => link.href);
 ---
 
-<footer class="mt-24 border-t" style="border-color: var(--border);">
-  <div class="container-content flex flex-col items-start justify-between gap-6 py-10 sm:flex-row sm:items-center">
-    <p class="text-caption" style="color: var(--text-muted);">
-      © {year} {site.name}. Built with Astro & hosted on GitHub Pages.
-    </p>
-    <SocialLinks />
+<footer id="site-footer" class="relative mt-auto overflow-hidden border-t border-line bg-page-alt">
+  <div class="container-wide grid gap-12 pb-12 pt-16 md:grid-cols-12 md:pt-20">
+    <div class="md:col-span-6">
+      <a href={url('/')} class="inline-flex items-center gap-3 text-ink">
+        <LogoMark class="h-9 w-9" />
+        <span class="font-display text-xl font-semibold tracking-tight">{site.name}</span>
+      </a>
+      <p class="mt-5 max-w-sm text-muted">{site.tagline}</p>
+    </div>
+    <nav aria-label="Footer" class="md:col-span-3">
+      <p class="mono-label">Sitemap</p>
+      <ul class="mt-4 space-y-2">
+        {
+          sitemap.map((item) => (
+            <li>
+              <a href={url(item.href)} class="link-underline">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="md:col-span-3">
+      <p class="mono-label">Elsewhere</p>
+      <ul class="mt-4 space-y-2">
+        {
+          elsewhere.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="link-underline"
+                {...(link.href.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-wide" aria-hidden="true">
+    <svg class="wordmark block w-full" viewBox="0 0 1000 168" focusable="false">
+      <text x="0" y="124" textLength="1000" lengthAdjust="spacing">{site.name}</text>
+    </svg>
+  </div>
+
+  <div class="container-wide">
+    <div
+      class="flex flex-col gap-3 border-t border-line py-6 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {site.name}</p>
+      <p>Built with Astro · Hosted on GitHub Pages</p>
+      <p data-local-time data-tz={site.timeZone} hidden>
+        {site.location} · <time></time>
+      </p>
+      <a href="#top" class="link-underline self-start text-ink sm:self-auto">Back to top ↑</a>
+    </div>
   </div>
 </footer>
+
+<script>
+  const clock = document.querySelector<HTMLElement>('[data-local-time]');
+  if (clock) {
+    const out = clock.querySelector('time')!;
+    const format = new Intl.DateTimeFormat('en-US', {
+      timeZone: clock.dataset.tz,
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+    const tick = () => (out.textContent = `${format.format(new Date())} local time`);
+    tick();
+    clock.hidden = false;
+    setInterval(tick, 30_000);
+  }
+</script>
+
+<style>
+  .wordmark text {
+    font-family: theme('fontFamily.display');
+    font-size: 158px;
+    font-weight: 500;
+    fill: rgb(var(--ink) / 0.03);
+    stroke: rgb(var(--ink) / 0.3);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+    transition:
+      fill 0.8s var(--ease-out),
+      stroke 0.8s var(--ease-out);
+  }
+  .wordmark:hover text {
+    fill: rgb(var(--accent));
+    stroke: rgb(var(--accent));
+  }
+</style>

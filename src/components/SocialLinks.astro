@@ -1,6 +1,12 @@
 ---
 import { site } from '@/config';
 
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
 const links = [
   {
     href: `mailto:${site.email}`,
@@ -17,24 +23,33 @@ const links = [
     label: 'LinkedIn',
     icon: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z',
   },
-];
+].filter((link) => link.href); // Unset profiles (e.g. an empty LinkedIn URL) are hidden.
 ---
 
-<ul class="flex items-center gap-4">
+<ul class:list={['flex items-center gap-3', className]}>
   {
     links.map((link) => (
       <li>
         <a
           href={link.href}
           aria-label={link.label}
-          class="inline-flex h-10 w-10 items-center justify-center rounded-btn border transition hover:border-[color:var(--text)]"
-          style="border-color: var(--border);"
-          {...link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-accent hover:text-accent-ink"
+          {...(link.href.startsWith('http')
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : {})}
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d={link.icon}></path>
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d={link.icon} />
           </svg>
-          <span class="sr-only">{link.label}</span>
         </a>
       </li>
     ))

@@ -1,18 +1,28 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Topo from '@/components/Topo.astro';
 import { url } from '@/lib/url';
 ---
 
 <BaseLayout title="Not found" description="That page doesn't exist.">
-  <section class="container-content flex min-h-[60vh] flex-col justify-center pb-section pt-16">
-    <p class="text-caption uppercase tracking-widest" style="color: var(--accent);">404</p>
-    <h1 class="mt-4 font-display text-display-lg font-semibold">Off the trail.</h1>
-    <p class="mt-6 max-w-xl text-body-lg" style="color: var(--text-muted);">
-      That page doesn't exist — or it may have moved. Let's get you back.
-    </p>
-    <div class="mt-10 flex flex-wrap gap-3">
-      <a href={url('/')} class="btn btn-primary">Home</a>
-      <a href={url('/projects')} class="btn btn-outline">Projects</a>
+  <section class="relative isolate flex min-h-[100svh] items-center overflow-hidden" data-topo-host>
+    <Topo seed={404} interactive intensity={0.8} class="absolute inset-0 -z-10" />
+    <div class="container-wide py-32">
+      <p class="eyebrow fade-up" style="--rise-delay: 60">Error 404 — Position unknown</p>
+      <h1
+        class="mt-6 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]"
+      >
+        <span class="clip-line"
+          ><span class="rise" style="--rise-delay: 120">Off the <em>trail.</em></span></span
+        >
+      </h1>
+      <p class="fade-up mt-8 max-w-xl text-body-lg text-muted" style="--rise-delay: 320">
+        That page doesn’t exist — or it may have moved. Let’s get you back on the map.
+      </p>
+      <div class="fade-up mt-10 flex flex-wrap gap-3" style="--rise-delay: 460">
+        <a href={url('/')} class="btn btn-primary">Back to home</a>
+        <a href={url('/projects')} class="btn btn-ghost">See the work</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

@@ -1,0 +1,41 @@
+---
+// Decorative ticker of tools and disciplines. Hidden from assistive tech: the
+// same skills are listed in the About section.
+const items = [
+  'Python',
+  'Machine learning',
+  'FastAPI',
+  'Supabase',
+  'PWM speed control',
+  'DC electrical design',
+  'Thermal management',
+  'Engine rebuilding',
+  'Carburetor jetting',
+  'Six Sigma',
+  'Lean',
+  'Process mapping',
+  'Team leadership',
+  'AI-assisted design',
+];
+---
+
+<div class="marquee border-y border-black/10 bg-accent-fill text-bone" aria-hidden="true">
+  <div class="marquee-track py-5 md:py-6">
+    {
+      [0, 1].map(() => (
+        <ul class="flex shrink-0 items-center">
+          {items.map((item) => (
+            <li class="flex items-center gap-8 pr-8 font-display text-[clamp(1.5rem,2.8vw,2.5rem)] italic leading-none">
+              {item}
+              <svg class="h-5 w-5 shrink-0 opacity-70" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2" />
+                <circle cx="10.5" cy="9.5" r="4.5" stroke="currentColor" stroke-width="1.2" />
+                <circle cx="11" cy="9" r="1.4" fill="currentColor" />
+              </svg>
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</div>

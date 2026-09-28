@@ -1,45 +1,67 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPosts } from '@/lib/blog';
 import { url } from '@/lib/url';
 
-const posts = (await getCollection('blog', ({ data }) => import.meta.env.PROD ? !data.draft : true))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = await getPosts();
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
 ---
 
-<BaseLayout title="Blog" description="Notes on projects, tools, and craft.">
-  <section class="container-content pb-section pt-16 md:pb-section-lg md:pt-24">
-    <p class="mb-4 text-caption uppercase tracking-widest" style="color: var(--accent);">
-      Writing
-    </p>
-    <h1 class="font-display text-display-lg font-semibold">Blog</h1>
-    <p class="mt-6 max-w-2xl text-body-lg" style="color: var(--text-muted);">
-      Occasional notes on projects, tools, and things I'm learning.
+<BaseLayout title="Blog" description="Field notes on projects, tools, and things I'm learning.">
+  <section class="container-wide pb-section pt-36 md:pb-section-lg md:pt-44">
+    <p class="eyebrow fade-up" style="--rise-delay: 60">Writing</p>
+    <h1 class="mt-6 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]">
+      <span class="clip-line"
+        ><span class="rise" style="--rise-delay: 120">Field <em>notes.</em></span></span
+      >
+    </h1>
+    <p class="fade-up mt-8 max-w-2xl text-body-lg text-muted" style="--rise-delay: 320">
+      Occasional notes on projects, tools, and things I’m learning.
     </p>
 
-    <ul class="mt-14 divide-y" style="border-color: var(--border);">
-      {posts.map((post) => (
-        <li class="py-6">
-          <a href={url(`/blog/${post.slug}`)} class="group block">
-            <time
-              class="text-caption uppercase tracking-widest"
-              style="color: var(--text-muted);"
-              datetime={post.data.pubDate.toISOString()}
-            >
-              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </time>
-            <h2 class="mt-2 font-display text-heading-md group-hover:underline decoration-[color:var(--accent)] underline-offset-4">
-              {post.data.title}
-            </h2>
-            <p class="mt-2 text-body" style="color: var(--text-muted);">{post.data.description}</p>
+    {
+      posts.length > 0 ? (
+        <ol class="mt-16 border-t border-line md:mt-24">
+          {posts.map((post, i) => (
+            <li class="border-b border-line" data-reveal style={`--reveal-delay: ${i * 80}`}>
+              <a
+                href={url(`/blog/${post.slug}`)}
+                class="group grid gap-3 py-8 md:grid-cols-12 md:gap-8"
+              >
+                <time
+                  class="mono-label pt-2 md:col-span-3"
+                  datetime={post.data.pubDate.toISOString()}
+                >
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <span class="md:col-span-9">
+                  <span class="block font-display text-heading-lg font-medium transition-colors group-hover:text-accent-display">
+                    {post.data.title}
+                  </span>
+                  <span class="mt-2 block text-muted">{post.data.description}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <div class="card mt-16 max-w-2xl p-8 md:mt-24 md:p-10">
+          <p class="mono-label">Nothing posted yet</p>
+          <p class="mt-4 text-body-lg">
+            The first notes are still in the workshop. In the meantime, the project write-ups are
+            the best look at how I work.
+          </p>
+          <a href={url('/projects')} class="btn btn-primary mt-8">
+            Browse the projects
           </a>
-        </li>
-      ))}
-    </ul>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>
-
-<style>
-  ul { border-top: 1px solid var(--border); }
-  li { border-bottom: 1px solid var(--border); }
-</style>
