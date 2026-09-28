@@ -2,6 +2,7 @@
 title: 'Complete ATV Rebuild'
 description: 'A ground-up engine teardown and rebuild with performance upgrades — new camshaft, larger carburetor, and high-compression piston.'
 featured: true
+order: 4
 thumbnail: '../../assets/projects/atv-rebuild.svg'
 thumbnailAlt: 'Exploded view of an ATV engine top end, with the upgraded camshaft, piston, and carburetor highlighted'
 techStack: ['Engine Rebuilding', 'Mechanical Engineering', 'Precision Assembly', 'Diagnostics']

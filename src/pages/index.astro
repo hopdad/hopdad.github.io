@@ -9,10 +9,10 @@ import Process from '@/components/Process.astro';
 import About from '@/components/About.astro';
 import Contact from '@/components/Contact.astro';
 import { site } from '@/config';
-import { getProjects } from '@/lib/projects';
+import { getFeatured, getProjects } from '@/lib/projects';
 import { url } from '@/lib/url';
 
-const featured = await getProjects(({ data }) => data.featured);
+const featured = await getFeatured();
 const total = (await getProjects()).length;
 
 const personJsonLd = {
@@ -36,8 +36,8 @@ const personJsonLd = {
     <div class="container-wide">
       <SectionHeader eyebrow="01 — Selected work" id="work-title">
         <Fragment slot="title">Built, tested, <em>put to work.</em></Fragment>
-        Machine learning, electrical systems, engines, and the processes that keep a distribution center
-        moving — each one started with a problem worth solving.
+        Machine learning, operations software, electronics, engines, and the processes that keep a distribution
+        center moving — each one started with a problem worth solving.
       </SectionHeader>
       <div class="mt-14 md:mt-20">
         <ProjectShowcase projects={featured} />

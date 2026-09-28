@@ -75,7 +75,10 @@ src/
    ```
 
    Numbers count up on scroll; any unit (`%`, `+`, `×`) is set in the accent color.
-   Projects with `featured: true` appear as stacked cards on the homepage.
+   Projects with `featured: true` appear as stacked cards on the homepage, ordered by `order`
+   (lowest first). For unfinished work, set `status: 'active'` (in development) or
+   `status: 'in-design'`; the page then shows the status, and `completedDate` reads as the
+   last-updated date.
 
 3. Illustrations live in `src/assets/projects/` at 1200×800. On the homepage they're cropped to
    fit the card, so keep the important parts between x≈220 and x≈980.
