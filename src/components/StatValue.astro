@@ -1,0 +1,22 @@
+---
+// Renders a stat like "4,000+" or "3×": the number counts up on scroll (see
+// scripts/motion.ts) and any unit is set in the accent color.
+export interface Props {
+  value: string;
+}
+
+const { value } = Astro.props;
+const match = value.match(/^(\D*?)(\d[\d,]*)(.*)$/);
+const [prefix, digits, suffix] = match ? [match[1], match[2], match[3]] : ['', '', value];
+const target = digits ? Number(digits.replace(/,/g, '')) : 0;
+---
+
+<span class="whitespace-nowrap"
+  >{prefix && <span class="text-accent-display">{prefix}</span>}{
+    digits && (
+      <span class="tabular-nums" data-count={target > 0 ? target : undefined}>
+        {digits}
+      </span>
+    )
+  }{suffix && <span class="text-accent-display">{suffix}</span>}</span
+>

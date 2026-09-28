@@ -1,18 +1,109 @@
 ---
 import { site } from '@/config';
-import { url } from '@/lib/url';
+import Topo from './Topo.astro';
 ---
 
-<section class="container-content pb-section pt-16 md:pb-section-lg md:pt-28">
-  <p class="mb-4 text-caption uppercase tracking-widest" style="color: var(--accent);">
-    {site.title}
-  </p>
-  <h1 class="font-display text-display-xl font-semibold">{site.name}</h1>
-  <p class="mt-6 max-w-2xl text-body-lg" style="color: var(--text-muted);">
-    {site.tagline}
-  </p>
-  <div class="mt-10 flex flex-wrap gap-3">
-    <a href={url('/projects')} class="btn btn-primary">View Projects</a>
-    <a href="#contact" class="btn btn-outline">Let's Connect</a>
+<section
+  class="hero relative isolate flex min-h-[100svh] flex-col overflow-hidden"
+  aria-labelledby="hero-title"
+  data-topo-host
+>
+  <Topo seed={7} interactive class="hero-map absolute inset-0 -z-10" />
+
+  <div class="container-wide flex flex-1 flex-col justify-center pb-12 pt-32 md:pt-36">
+    <p class="eyebrow fade-up" style="--rise-delay: 80">{site.name} — {site.title}</p>
+
+    <h1
+      id="hero-title"
+      class="mt-8 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]"
+    >
+      <span class="clip-line">
+        <span class="rise" style="--rise-delay: 160">Some problems need <em>Python.</em></span>
+      </span>
+      <span class="clip-line">
+        <span class="rise" style="--rise-delay: 300"
+          >Others need a <em>torque&nbsp;wrench.</em></span
+        >
+      </span>
+    </h1>
+
+    <p class="fade-up mt-8 max-w-[40rem] text-body-lg text-muted" style="--rise-delay: 560">
+      I’m Derrick — 15+ years solving problems on the floor of one of Michigan’s largest
+      distribution centers, and a builder of machine-learning platforms, custom electronics, and
+      ground-up engine rebuilds. Different materials, same method: <span class="text-ink"
+        >understand it, plan it, build it right.</span
+      >
+    </p>
+
+    <div class="fade-up mt-10 flex flex-wrap gap-3" style="--rise-delay: 720">
+      <a href="#work" class="btn btn-primary btn-down">
+        See the work
+        <svg
+          class="btn-arrow h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg
+        >
+      </a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+
+  <div
+    class="container-wide fade-up flex items-end justify-between gap-6 pb-8"
+    style="--rise-delay: 900"
+  >
+    <p class="mono-label hidden sm:block">
+      Fig. 01 — Live contour map<span class="pointer-hint">
+        · Move your cursor to raise a summit</span
+      >
+    </p>
+    <a href="#work" class="mono-label ml-auto flex items-center gap-3 text-ink">
+      Scroll <span class="scroll-line" aria-hidden="true"></span>
+    </a>
   </div>
 </section>
+
+<style>
+  /* Fade the map out toward the next section. */
+  .hero-map {
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  }
+
+  .pointer-hint {
+    display: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pointer-hint {
+      display: inline;
+    }
+  }
+
+  .scroll-line {
+    position: relative;
+    width: 1px;
+    height: 2.75rem;
+    overflow: hidden;
+    background: rgb(var(--line));
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -40%;
+    width: 1px;
+    height: 40%;
+    background: rgb(var(--accent));
+    animation: scroll-cue 2.4s var(--ease-out) infinite;
+  }
+  @keyframes scroll-cue {
+    to {
+      top: 100%;
+    }
+  }
+</style>

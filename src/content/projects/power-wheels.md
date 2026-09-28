@@ -1,10 +1,17 @@
 ---
 title: 'Custom Power Wheels Engineering'
-description: 'A complete electrical system redesign of a children''s ride-on vehicle — 24V upgrade with PWM speed control, thermal management, and safety systems.'
+description: "A complete electrical system redesign of a children's ride-on vehicle — 24V upgrade with PWM speed control, thermal management, and safety systems."
 featured: true
 thumbnail: '../../assets/projects/power-wheels.svg'
-thumbnailAlt: 'Simplified side view of a custom vehicle with lightning bolt'
+thumbnailAlt: 'Blueprint of a ride-on vehicle with its 24V drive system overlaid: batteries in series, fuse, PWM controller, thermal cutoff, E-stop, and motors'
 techStack: ['DC Electrical Design', 'PWM Controllers', 'Safety Systems', 'Thermal Analysis']
+stats:
+  - value: '3×'
+    label: 'Speed increase, safety margins intact'
+  - value: '24V'
+    label: 'Upgraded from the stock 12V system'
+  - value: '2+ yrs'
+    label: 'Of reliable operation and counting'
 completedDate: 2024-08-20
 category: 'hardware'
 ---

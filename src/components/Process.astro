@@ -1,0 +1,146 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { pad } from '@/lib/projects';
+
+// Each step is illustrated with something that actually happened in a project.
+const steps = [
+  {
+    title: 'Understand',
+    body: 'Map the whole system before changing any of it. On the dock, that meant charting every step of the outbound workflow with the Six Sigma Lean team. For FishCast, it meant learning how weather and seasons really move fish.',
+  },
+  {
+    title: 'Plan',
+    body: 'Write it down and do the math first. FishCast stands on sixteen specification documents, from ML pipeline design to legal compliance. The Power Wheels upgrade hinged on getting conductor sizing right.',
+  },
+  {
+    title: 'Build',
+    body: 'Execute in small, verifiable steps. When you can’t shut down a live cold-storage dock to test a new process, every change has to prove itself while the trucks keep rolling.',
+  },
+  {
+    title: 'Prove it',
+    body: 'Measure the result, then make it last. The dock changes became standard practice on every shift, the ride-on has run reliably for two-plus years, and the ATV for several seasons.',
+  },
+];
+---
+
+<section id="process" aria-labelledby="process-title" class="py-section md:py-section-lg">
+  <div class="container-wide">
+    <SectionHeader eyebrow="02 — How I work" id="process-title">
+      <Fragment slot="title">Same method, <em>any material.</em></Fragment>
+      Whether I’m debugging a Python pipeline or rebuilding an engine, the approach is the same: understand
+      the problem, plan the solution, execute with precision — then prove it works.
+    </SectionHeader>
+
+    <ol class="trail mt-16 grid gap-12 md:mt-20 lg:grid-cols-4 lg:gap-10" data-reveal>
+      {
+        steps.map((step, i) => (
+          <li class="trail-step relative" style={`--i: ${i}`}>
+            <span class="trail-marker" aria-hidden="true" />
+            <p class="font-display text-[3.5rem] font-light italic leading-none text-accent-display">
+              {pad(i + 1)}
+            </p>
+            <h3 class="mt-5 font-display text-heading-md font-medium">{step.title}</h3>
+            <p class="mt-3 text-muted">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* A dashed trail, like a hiking route on a map, that draws itself in. */
+  .trail {
+    position: relative;
+    --trail: repeating-linear-gradient(
+      var(--trail-dir, to bottom),
+      rgb(var(--accent)) 0 8px,
+      transparent 8px 15px
+    );
+  }
+  .trail::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0.5rem;
+    bottom: 0;
+    width: 1.5px;
+    background: var(--trail);
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.6s var(--ease-out) 0.2s;
+  }
+  .trail-step {
+    padding-left: 2.75rem;
+  }
+  .trail-marker {
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid rgb(var(--accent));
+    background: rgb(var(--page));
+    transform: scale(0);
+    transition: transform 0.6s var(--ease-out);
+    transition-delay: calc(var(--i) * 180ms + 300ms);
+  }
+  .trail-marker::after {
+    content: '';
+    position: absolute;
+    inset: 3.5px;
+    border-radius: 50%;
+    background: rgb(var(--accent));
+  }
+  .trail-step > :not(.trail-marker) {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.8s var(--ease-out);
+    transition-delay: calc(var(--i) * 180ms + 350ms);
+  }
+
+  @media (min-width: 1024px) {
+    .trail {
+      --trail-dir: to right;
+    }
+    .trail::before {
+      left: 0;
+      right: 0;
+      top: 7px;
+      bottom: auto;
+      width: auto;
+      height: 1.5px;
+      clip-path: inset(0 100% 0 0);
+    }
+    .trail-step {
+      padding-left: 0;
+      padding-top: 3.25rem;
+    }
+    .trail-marker {
+      top: 0;
+    }
+  }
+
+  /* Revealed (or no JS / reduced motion): everything in place. */
+  .trail.is-in::before,
+  :global(html:not(.js)) .trail::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .trail.is-in .trail-marker,
+  :global(html:not(.js)) .trail-marker {
+    transform: none;
+  }
+  .trail.is-in .trail-step > :not(.trail-marker),
+  :global(html:not(.js)) .trail-step > :not(.trail-marker) {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* The list itself shouldn't fade; its parts animate instead. */
+  :global(.js) .trail[data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+</style>

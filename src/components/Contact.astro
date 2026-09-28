@@ -1,0 +1,87 @@
+---
+import { site } from '@/config';
+import SocialLinks from './SocialLinks.astro';
+import Topo from './Topo.astro';
+---
+
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="relative isolate overflow-hidden py-section-lg md:py-40"
+  data-topo-host
+>
+  <Topo seed={42} interactive intensity={0.8} class="contact-map absolute inset-0 -z-10" />
+
+  <div class="container-wide">
+    <p class="eyebrow" data-reveal>04 — Contact</p>
+    <h2
+      id="contact-title"
+      class="mt-6 max-w-[14ch] font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]"
+      data-reveal
+      style="--reveal-delay: 80"
+    >
+      Got a problem worth <em>solving?</em>
+    </h2>
+    <p class="mt-8 max-w-xl text-body-lg text-muted" data-reveal style="--reveal-delay: 160">
+      Whether it’s building something new, optimizing an existing process, or tackling a technical
+      challenge, I’d love to hear what you’re working on.
+    </p>
+
+    <div
+      class="mt-12 flex flex-col items-start gap-5 sm:flex-row sm:flex-wrap sm:items-center"
+      data-reveal
+      style="--reveal-delay: 240"
+    >
+      <a
+        href={`mailto:${site.email}`}
+        class="link-underline break-all font-display text-[clamp(1.5rem,4.2vw,3.25rem)] font-medium leading-tight text-ink"
+      >
+        {site.email}
+      </a>
+      <button type="button" class="btn btn-ghost py-2.5" data-copy={site.email}>
+        <svg
+          class="h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span data-copy-label aria-live="polite">Copy email</span>
+      </button>
+    </div>
+
+    <div class="mt-10 flex items-center gap-6" data-reveal style="--reveal-delay: 320">
+      <SocialLinks />
+      <p class="mono-label">Based in {site.location}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    const label = button.querySelector('[data-copy-label]')!;
+    const initial = label.textContent;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        label.textContent = 'Copied!';
+      } catch {
+        label.textContent = 'Copy failed';
+      }
+      setTimeout(() => (label.textContent = initial), 2200);
+    });
+  });
+</script>
+
+<style>
+  .contact-map {
+    -webkit-mask-image: radial-gradient(ellipse 80% 90% at 75% 55%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 90% at 75% 55%, #000 30%, transparent 75%);
+  }
+</style>

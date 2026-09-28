@@ -1,28 +1,261 @@
 ---
-import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
+import { categoryLabel, getProjects, pad } from '@/lib/projects';
+import { url } from '@/lib/url';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => b.data.completedDate.valueOf() - a.data.completedDate.valueOf()
-);
+const projects = await getProjects();
 ---
 
 <BaseLayout
-  title="Projects"
-  description="A selection of projects I've built — from ML platforms to hands-on engineering."
+  title="Work"
+  description="Projects by Derrick Hopson — machine learning, electrical systems, engine rebuilds, and warehouse process engineering."
 >
-  <section class="container-content pb-section pt-16 md:pb-section-lg md:pt-24">
-    <p class="mb-4 text-caption uppercase tracking-widest" style="color: var(--accent);">
-      Selected work
-    </p>
-    <h1 class="font-display text-display-lg font-semibold">Projects</h1>
-    <p class="mt-6 max-w-2xl text-body-lg" style="color: var(--text-muted);">
-      Things I've built and engineered — from code to hardware. Each one started with a problem worth solving.
+  <section class="container-wide pb-section pt-36 md:pb-section-lg md:pt-44">
+    <p class="eyebrow fade-up" style="--rise-delay: 60">Index — {pad(projects.length)} projects</p>
+    <h1 class="mt-6 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]">
+      <span class="clip-line"
+        ><span class="rise" style="--rise-delay: 120">From code to <em>crankshaft.</em></span></span
+      >
+    </h1>
+    <p class="fade-up mt-8 max-w-2xl text-body-lg text-muted" style="--rise-delay: 320">
+      Machine learning, electrical systems, engines, and the processes that keep a distribution
+      center moving. Each one started with a problem worth solving.
     </p>
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2">
-      {projects.map((project) => <ProjectCard project={project} />)}
-    </div>
+    <ol class="mt-16 border-t border-line md:mt-24" data-preview-list>
+      {
+        projects.map((project, i) => {
+          const { title, description, thumbnail, category, completedDate } = project.data;
+          return (
+            <li class="border-b border-line" data-reveal style={`--reveal-delay: ${i * 80}`}>
+              <a
+                href={url(`/projects/${project.slug}`)}
+                class="index-row group"
+                data-preview={project.slug}
+              >
+                <span class="font-mono text-xs text-accent-ink">{pad(i + 1)}</span>
+                <span class="index-thumb" style={`view-transition-name: art-${project.slug}`}>
+                  <Image
+                    src={thumbnail}
+                    alt=""
+                    widths={[600, 900]}
+                    sizes="100vw"
+                    class="h-full w-full object-cover"
+                  />
+                </span>
+                <span class="min-w-0">
+                  <span class="index-title block font-display font-medium">{title}</span>
+                  <span class="mt-2 line-clamp-2 block max-w-2xl text-muted">{description}</span>
+                </span>
+                <span class="mono-label leading-relaxed md:text-right">
+                  {categoryLabel[category]}
+                  <br />
+                  {completedDate.getUTCFullYear()}
+                </span>
+                <span class="index-arrow" aria-hidden="true">
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ol>
   </section>
+
+  <div class="preview" aria-hidden="true" data-preview-panel>
+    {
+      projects.map((project) => (
+        <Image
+          src={project.data.thumbnail}
+          alt=""
+          widths={[600]}
+          sizes="360px"
+          class="preview-img"
+          data-preview-img={project.slug}
+        />
+      ))
+    }
+  </div>
 </BaseLayout>
+
+<script>
+  // Desktop: the hovered project's artwork floats beside the cursor.
+  const list = document.querySelector<HTMLElement>('[data-preview-list]');
+  const panel = document.querySelector<HTMLElement>('[data-preview-panel]');
+  const finePointer = window.matchMedia(
+    '(hover: hover) and (pointer: fine) and (min-width: 768px)'
+  );
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (list && panel && finePointer.matches) {
+    const images = [...panel.querySelectorAll<HTMLElement>('[data-preview-img]')];
+    let x = 0;
+    let y = 0;
+    let tx = 0;
+    let ty = 0;
+    let raf = 0;
+
+    const place = () => {
+      const ease = reduce ? 1 : 0.16;
+      x += (tx - x) * ease;
+      y += (ty - y) * ease;
+      panel.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(place) : 0;
+    };
+
+    list.querySelectorAll<HTMLElement>('[data-preview]').forEach((row) => {
+      row.addEventListener('pointerenter', () => {
+        images.forEach((img) =>
+          img.classList.toggle('is-active', img.dataset.previewImg === row.dataset.preview)
+        );
+        panel.classList.add('is-visible');
+      });
+    });
+    list.addEventListener('pointermove', (e) => {
+      const width = panel.offsetWidth;
+      const height = panel.offsetHeight;
+      tx = Math.min(e.clientX + 36, window.innerWidth - width - 24);
+      ty = Math.min(Math.max(e.clientY - height / 2, 16), window.innerHeight - height - 16);
+      if (!panel.classList.contains('is-visible')) {
+        x = tx;
+        y = ty;
+      }
+      if (!raf) raf = requestAnimationFrame(place);
+    });
+    list.addEventListener('pointerleave', () => panel.classList.remove('is-visible'));
+  }
+</script>
+
+<style>
+  .index-row {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem 1.25rem;
+    align-items: start;
+    padding: 2rem 0;
+    transition: background-color 0.4s ease;
+  }
+  .index-row > :nth-child(3),
+  .index-row > :nth-child(4) {
+    grid-column: 2;
+  }
+  .index-row > :nth-child(5) {
+    display: none;
+  }
+  .index-thumb {
+    grid-column: 2;
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(var(--line));
+  }
+  .index-title {
+    font-size: clamp(1.75rem, 3.4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    transition:
+      transform 0.6s var(--ease-out),
+      color 0.3s ease;
+  }
+  .index-arrow {
+    display: inline-flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--line));
+    transition:
+      transform 0.6s var(--ease-out),
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  @media (min-width: 768px) {
+    .index-row {
+      grid-template-columns: 3.5rem minmax(0, 1fr) 11rem 3rem;
+      gap: 2rem;
+      align-items: baseline;
+      padding: 2.5rem 0;
+    }
+    .index-row > :nth-child(4),
+    .index-row > :nth-child(5) {
+      align-self: center;
+    }
+    .index-row > :nth-child(3),
+    .index-row > :nth-child(4) {
+      grid-column: auto;
+    }
+    .index-row > :nth-child(5) {
+      display: inline-flex;
+    }
+    .index-thumb {
+      display: none;
+    }
+    .index-row:hover .index-title,
+    .index-row:focus-visible .index-title {
+      transform: translateX(0.75rem);
+      color: rgb(var(--accent-display));
+    }
+    .index-row:hover .index-arrow,
+    .index-row:focus-visible .index-arrow {
+      transform: rotate(45deg);
+      background: rgb(var(--accent-fill));
+      border-color: rgb(var(--accent-fill));
+      color: #fbf8f1;
+    }
+  }
+
+  .preview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 45;
+    width: 22rem;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 12px;
+    pointer-events: none;
+    opacity: 0;
+    scale: 0.85;
+    box-shadow: 0 2rem 4rem -1.5rem rgb(10 25 34 / 0.55);
+    transition:
+      opacity 0.35s ease,
+      scale 0.5s var(--ease-out);
+  }
+  .preview.is-visible {
+    opacity: 1;
+    scale: 1;
+  }
+  .preview-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .preview-img.is-active {
+    opacity: 1;
+  }
+  @media not all and (hover: hover) and (pointer: fine) {
+    .preview {
+      display: none;
+    }
+  }
+</style>

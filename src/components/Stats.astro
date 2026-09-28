@@ -1,0 +1,55 @@
+---
+import StatValue from './StatValue.astro';
+
+// Headline numbers, each drawn from a project write-up.
+const stats = [
+  { value: '15+', label: 'Years solving problems on a distribution-center floor' },
+  { value: '4,000+', label: 'Michigan lakes modeled by the FishCast platform' },
+  { value: '23%', label: 'Faster dock-to-truck time, with zero safety incidents' },
+  { value: '3×', label: 'Top speed from a rewired 24V ride-on, safely' },
+];
+---
+
+<section aria-labelledby="stats-title" class="container-wide py-section md:py-section-lg">
+  <h2 id="stats-title" class="eyebrow font-mono" data-reveal>By the numbers</h2>
+  <ul class="stats mt-10 grid grid-cols-2 border-t border-line lg:grid-cols-4">
+    {
+      stats.map((stat, i) => (
+        <li data-reveal style={`--reveal-delay: ${i * 90}`}>
+          <p class="font-display text-[clamp(2.5rem,6vw,5.25rem)] font-medium leading-none tracking-tight [font-variation-settings:'opsz'_144]">
+            <StatValue value={stat.value} />
+          </p>
+          <p class="mt-4 max-w-[16rem] text-sm leading-relaxed text-muted">{stat.label}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .stats > li {
+    padding: 2rem 1.25rem 2rem 0;
+    border-bottom: 1px solid rgb(var(--line));
+  }
+  @media (max-width: 1023px) {
+    .stats > li:nth-child(odd) {
+      border-right: 1px solid rgb(var(--line));
+    }
+    .stats > li:nth-child(even) {
+      padding-left: 1.25rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .stats > li {
+      padding: 2.75rem 2rem;
+      border-bottom: 0;
+      border-right: 1px solid rgb(var(--line));
+    }
+    .stats > li:first-child {
+      padding-left: 0;
+    }
+    .stats > li:last-child {
+      border-right: 0;
+    }
+  }
+</style>

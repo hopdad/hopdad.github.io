@@ -11,6 +11,11 @@ const projects = defineCollection({
       thumbnailAlt: z.string(),
       images: z.array(image()).optional(),
       techStack: z.array(z.string()),
+      // Headline numbers shown on cards and the project page, e.g. { value: '23%', label: 'Faster dock-to-truck' }
+      stats: z
+        .array(z.object({ value: z.string(), label: z.string() }))
+        .max(4)
+        .default([]),
       liveUrl: z.string().url().optional(),
       githubUrl: z.string().url().optional(),
       completedDate: z.date(),
