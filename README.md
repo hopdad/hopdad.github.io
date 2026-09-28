@@ -54,7 +54,10 @@ src/
 │   ├── rss.xml.ts
 │   └── 404.astro
 ├── scripts/
-│   ├── topo.ts           # contour map: simplex noise + marching squares
+│   ├── topo/             # contour map: simplex noise + marching squares
+│   │   ├── core.ts       #   renderer + render loop
+│   │   ├── worker.ts     #   runs the loop on an OffscreenCanvas, off the main thread
+│   │   └── index.ts      #   watches size/visibility/theme/pointer; main-thread fallback
 │   └── motion.ts         # scroll reveals, count-up numbers, card spotlights
 └── styles/global.css     # design tokens (light + dark), base styles, utilities
 ```

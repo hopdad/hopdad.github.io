@@ -112,7 +112,7 @@ const { projects } = Astro.props;
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     stacking.addEventListener('change', schedule);
-    update();
+    schedule();
   }
 </script>
 

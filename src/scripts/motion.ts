@@ -41,23 +41,25 @@ if (!reduceMotion && canObserve && counters.length) {
     };
     requestAnimationFrame(tick);
   };
+  // The observer's first report says whether each number starts on screen, so
+  // nothing needs a layout read up front. Off-screen numbers reset to zero and
+  // count up when they arrive; on-screen ones count up right away.
   const io = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        run(entry.target as HTMLElement);
-        io.unobserve(entry.target);
+        const el = entry.target as HTMLElement;
+        if (entry.intersectionRatio >= 0.6) {
+          run(el);
+          io.unobserve(el);
+        } else if (!el.dataset.primed) {
+          el.dataset.primed = 'true';
+          render(el, 0);
+        }
       }
     },
-    { threshold: 0.6 }
+    { threshold: [0, 0.6] }
   );
-  counters.forEach((el) => {
-    // Numbers already on screen at load keep their final value.
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) return;
-    render(el, 0);
-    io.observe(el);
-  });
+  counters.forEach((el) => io.observe(el));
 }
 
 // --- Spotlight: [data-spotlight] gets --mx/--my for a cursor-following glow ---
