@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StatValue from '@/components/StatValue.astro';
-import { categoryLabel, getProjects, pad, type Project } from '@/lib/projects';
+import { categoryLabel, getProjects, pad, timingDetail, type Project } from '@/lib/projects';
 import { url } from '@/lib/url';
 
 export async function getStaticPaths() {
@@ -39,20 +39,17 @@ const {
   githubUrl,
   completedDate,
   category,
+  status,
 } = project.data;
 
-const dateLabel = completedDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  timeZone: 'UTC',
-});
+const timing = timingDetail(project);
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',
   name: title,
   description,
-  dateCreated: completedDate.toISOString(),
+  [status === 'complete' ? 'dateCreated' : 'dateModified']: completedDate.toISOString(),
   genre: categoryLabel[category],
   keywords: techStack.join(', '),
   url: Astro.url.toString(),
@@ -136,10 +133,21 @@ const jsonLd = {
           <dd class="mt-2 font-display text-heading-md">{categoryLabel[category]}</dd>
         </div>
         <div class="bg-page p-6">
-          <dt class="mono-label">Completed</dt>
-          <dd class="mt-2 font-display text-heading-md">
-            <time datetime={completedDate.toISOString()}>{dateLabel}</time>
-          </dd>
+          <dt class="mono-label">{timing.label}</dt>
+          {
+            timing.note ? (
+              <>
+                <dd class="mt-2 font-display text-heading-md">{timing.value}</dd>
+                <dd class="mt-1 text-sm text-muted">
+                  <time datetime={completedDate.toISOString()}>{timing.note}</time>
+                </dd>
+              </>
+            ) : (
+              <dd class="mt-2 font-display text-heading-md">
+                <time datetime={completedDate.toISOString()}>{timing.value}</time>
+              </dd>
+            )
+          }
         </div>
         <div class="bg-page p-6 sm:col-span-2">
           <dt class="mono-label">Toolkit</dt>

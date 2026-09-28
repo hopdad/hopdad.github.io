@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img"><title>7.3 Powerstroke digital dash</title><desc>A dark, high-contrast gauge screen in simulation mode, cruising at highway speed: arc gauges read exhaust gas temperature 820 degrees, boost 14 psi, injection control pressure 950 psi, fuel pressure 58 psi, oil temperature 198 degrees, and transmission temperature 172 degrees, each with warning and critical bands, beside bars for manifold pressure and injection pressure regulator duty cycle.</desc><style>.g1{animation:g1 5s ease-in-out infinite alternate}@keyframes g1{to{stroke-dashoffset:43.5}}.g2{animation:g2 3.2s ease-in-out infinite alternate}@keyframes g2{to{stroke-dashoffset:51}}.g3{animation:g3 2.6s ease-in-out infinite alternate}@keyframes g3{to{stroke-dashoffset:71}}.rec{animation:rec 1.4s steps(2,jump-none) infinite}@keyframes rec{50%{opacity:.2}} @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }</style>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C2226"/><stop offset="1" stop-color="#121619"/></linearGradient>
+  <linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E363C"/><stop offset="1" stop-color="#232A2F"/></linearGradient>
+  <radialGradient id="glare" cx="0.3" cy="0" r="0.9"><stop offset="0" stop-color="#FBF8F1" stop-opacity="0.05"/><stop offset="1" stop-color="#FBF8F1" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="800" fill="url(#bg)"/>
+<text x="232" y="108" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.6" letter-spacing="2.2" text-anchor="start">BENCH BUILD · SIMULATED INPUTS</text>
+<text x="976" y="108" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.6" letter-spacing="2.2" text-anchor="end">ESP32-S3 · LVGL</text>
+<rect x="232" y="132" width="744" height="470" rx="26" fill="url(#bezel)" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+<rect x="254" y="154" width="700" height="426" rx="10" fill="#0A0E10"/>
+<text x="278" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.55" letter-spacing="1.6" text-anchor="start">SIM_MODE ·</text>
+<text x="381.4" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.4" letter-spacing="1.6" text-anchor="start">IDLE</text>
+<text x="428.4" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.4" letter-spacing="1.6" text-anchor="start">→</text>
+<text x="447.2" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.4" letter-spacing="1.6" text-anchor="start">REV</text>
+<text x="484.8" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.4" letter-spacing="1.6" text-anchor="start">→</text>
+<text x="503.6" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#EC9268" fill-opacity="1" letter-spacing="1.6" text-anchor="start">HIGHWAY</text>
+<circle class="rec" cx="840" cy="182" r="5" fill="#C75B30"/>
+<text x="930" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.55" letter-spacing="1.6" text-anchor="end">LOG · SD</text>
+<line x1="274" y1="202" x2="934" y2="202" stroke="#F4EFE3" stroke-opacity="0.08"/>
+<path d="M299.1 346.4 A60 60 0 1 1 383.9 346.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M410.9 281.4 A73 73 0 0 1 414.5 304.0" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path d="M414.5 304.0 A73 73 0 0 1 393.1 355.6" fill="none" stroke="#C75B30" stroke-width="3.5"/>
+<path class="g1" d="M299.1 346.4 A60 60 0 1 1 383.9 346.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="45.3"/>
+<text x="341.5" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">820</text>
+<text x="341.5" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">°F</text>
+<text x="341.5" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">EGT</text>
+<path d="M474.1 346.4 A60 60 0 1 1 558.9 346.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M588.6 315.4 A73 73 0 0 1 581.5 337.1" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path d="M581.5 337.1 A73 73 0 0 1 568.1 355.6" fill="none" stroke="#C75B30" stroke-width="3.5"/>
+<path class="g2" d="M474.1 346.4 A60 60 0 1 1 558.9 346.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="53.3"/>
+<text x="516.5" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">14</text>
+<text x="516.5" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">PSI</text>
+<text x="516.5" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">BOOST</text>
+<path d="M649.1 346.4 A60 60 0 1 1 733.9 346.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M764.0 312.2 A73 73 0 0 1 743.1 355.6" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path class="g3" d="M649.1 346.4 A60 60 0 1 1 733.9 346.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="72.9"/>
+<text x="691.5" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">950</text>
+<text x="691.5" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">PSI</text>
+<text x="691.5" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">ICP</text>
+<path d="M824.1 346.4 A60 60 0 1 1 908.9 346.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M814.9 355.6 A73 73 0 0 1 849.5 233.0" fill="none" stroke="#C75B30" stroke-width="3.5"/>
+<path d="M849.5 233.0 A73 73 0 0 1 866.5 231.0" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path d="M824.1 346.4 A60 60 0 1 1 908.9 346.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="42.0"/>
+<text x="866.5" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">58</text>
+<text x="866.5" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">PSI</text>
+<text x="866.5" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">FUEL</text>
+<path d="M299.1 518.4 A60 60 0 1 1 383.9 518.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M388.9 420.5 A73 73 0 0 1 405.2 440.3" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path d="M405.2 440.3 A73 73 0 0 1 393.1 527.6" fill="none" stroke="#C75B30" stroke-width="3.5"/>
+<path d="M299.1 518.4 A60 60 0 1 1 383.9 518.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="51.0"/>
+<text x="341.5" y="486" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">198</text>
+<text x="341.5" y="508" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">°F</text>
+<text x="341.5" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">EOT</text>
+<path d="M474.1 518.4 A60 60 0 1 1 558.9 518.4" fill="none" stroke="#222C31" stroke-width="11" stroke-linecap="round"/>
+<path d="M549.6 411.0 A73 73 0 0 1 575.6 433.1" fill="none" stroke="#EC9268" stroke-width="3.5"/>
+<path d="M575.6 433.1 A73 73 0 0 1 568.1 527.6" fill="none" stroke="#C75B30" stroke-width="3.5"/>
+<path d="M474.1 518.4 A60 60 0 1 1 558.9 518.4" pathLength="100" fill="none" stroke="#FBF8F1" stroke-width="11" stroke-linecap="round" stroke-dasharray="100 100" stroke-dashoffset="64.0"/>
+<text x="516.5" y="486" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="34" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="middle" font-weight="bold">172</text>
+<text x="516.5" y="508" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="middle">°F</text>
+<text x="516.5" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="middle" font-weight="bold">TRANS</text>
+<text x="628" y="432" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="start" font-weight="bold">MAP</text>
+<text x="926" y="434" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="26" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="end" font-weight="bold">28.7</text>
+<text x="852" y="432" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="end">PSIA</text>
+<rect x="628.0" y="448" width="298.0" height="10" rx="5" fill="#222C31"/>
+<rect class="bar0" x="628.0" y="448" width="190.1" height="10" rx="5" fill="#FBF8F1"/>
+<text x="628" y="516" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.8" letter-spacing="2" text-anchor="start" font-weight="bold">IPR</text>
+<text x="926" y="518" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="26" fill="#FBF8F1" fill-opacity="1.0" letter-spacing="-0.5" text-anchor="end" font-weight="bold">32</text>
+<text x="884" y="516" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="#F4EFE3" fill-opacity="0.5" letter-spacing="1.4" text-anchor="end">% DUTY</text>
+<rect x="628.0" y="532" width="298.0" height="10" rx="5" fill="#222C31"/>
+<rect class="bar1" x="628.0" y="532" width="95.4" height="10" rx="5" fill="#FBF8F1"/>
+<text x="628" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10" fill="#F4EFE3" fill-opacity="0.4" letter-spacing="1.6" text-anchor="start">PCM TAPS · REFERENCE</text>
+<rect x="254" y="154" width="700" height="426" rx="10" fill="url(#glare)" pointer-events="none"/>
+<line x1="232" y1="650" x2="976" y2="650" stroke="#F4EFE3" stroke-opacity="0.15"/>
+<text x="232" y="684" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#F4EFE3" fill-opacity="0.6" letter-spacing="1.6" text-anchor="start">ADS1115 @ 20 HZ · MAX31855 @ 4 HZ · IPR PWM CAPTURE</text>
+<text x="976" y="684" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#EC9268" fill-opacity="1.0" letter-spacing="1.6" text-anchor="end">PHASE 1 · BENCH</text>
+</svg>

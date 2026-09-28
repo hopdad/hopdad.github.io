@@ -2,9 +2,11 @@
 title: 'FishCast ML Platform'
 description: "An ML-powered platform that predicts fishing success rates for Michigan's 4,000+ inland lakes using real-time weather data, seasonal patterns, and historical catch information."
 featured: true
+order: 1
 thumbnail: '../../assets/projects/fishcast.svg'
 thumbnailAlt: 'Lake depth chart with 5-foot contours, a predicted fishing hotspot on a drop-off, and a 7-day bite outlook'
-techStack: ['Python', 'Scikit-learn', 'FastAPI', 'Supabase', 'JavaScript', 'Claude AI']
+techStack:
+  ['Python', 'XGBoost', 'Scikit-learn', 'FastAPI', 'Supabase', 'React', 'Leaflet', 'Claude AI']
 stats:
   - value: '4,000+'
     label: 'Michigan inland lakes covered'
@@ -12,7 +14,6 @@ stats:
     label: 'Prediction accuracy in beta testing'
   - value: '16'
     label: 'Specification documents behind the build'
-githubUrl: 'https://github.com/hopdad/fishcast'
 completedDate: 2025-01-15
 category: 'ml'
 ---

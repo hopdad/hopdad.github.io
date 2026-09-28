@@ -5,21 +5,29 @@ const items = [
   'Python',
   'Machine learning',
   'FastAPI',
-  'Supabase',
+  'React',
+  'TypeScript',
+  'PostGIS',
+  'Rust',
+  'OCR',
   'PWM speed control',
   'DC electrical design',
-  'Thermal management',
   'Engine rebuilding',
   'Carburetor jetting',
   'Six Sigma',
   'Lean',
   'Process mapping',
+  'Route optimization',
   'Team leadership',
   'AI-assisted design',
 ];
 ---
 
-<div class="marquee border-y border-black/10 bg-accent-fill text-bone" aria-hidden="true">
+<div
+  class="marquee border-y border-black/10 bg-accent-fill text-bone"
+  style={`--marquee-duration: ${items.length * 3.6}s`}
+  aria-hidden="true"
+>
   <div class="marquee-track py-5 md:py-6">
     {
       [0, 1].map(() => (

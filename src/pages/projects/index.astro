@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { categoryLabel, getProjects, pad } from '@/lib/projects';
+import { categoryLabel, getProjects, pad, timingTag } from '@/lib/projects';
 import { url } from '@/lib/url';
 
 const projects = await getProjects();
@@ -9,7 +9,7 @@ const projects = await getProjects();
 
 <BaseLayout
   title="Work"
-  description="Projects by Derrick Hopson — machine learning, electrical systems, engine rebuilds, and warehouse process engineering."
+  description="Projects by Derrick Hopson — machine learning, operations software, desktop tools, electronics, engine rebuilds, and warehouse process engineering."
 >
   <section class="container-wide pb-section pt-36 md:pb-section-lg md:pt-44">
     <p class="eyebrow fade-up" style="--rise-delay: 60">Index — {pad(projects.length)} projects</p>
@@ -19,16 +19,20 @@ const projects = await getProjects();
       >
     </h1>
     <p class="fade-up mt-8 max-w-2xl text-body-lg text-muted" style="--rise-delay: 320">
-      Machine learning, electrical systems, engines, and the processes that keep a distribution
-      center moving. Each one started with a problem worth solving.
+      Machine learning, operations software, desktop tools, electronics, engines, and the processes
+      that keep a distribution center moving. Each one started with a problem worth solving.
     </p>
 
     <ol class="mt-16 border-t border-line md:mt-24" data-preview-list>
       {
         projects.map((project, i) => {
-          const { title, description, thumbnail, category, completedDate } = project.data;
+          const { title, description, thumbnail, category } = project.data;
           return (
-            <li class="border-b border-line" data-reveal style={`--reveal-delay: ${i * 80}`}>
+            <li
+              class="border-b border-line"
+              data-reveal
+              style={`--reveal-delay: ${Math.min(i, 4) * 80}`}
+            >
               <a
                 href={url(`/projects/${project.slug}`)}
                 class="index-row group"
@@ -51,7 +55,9 @@ const projects = await getProjects();
                 <span class="mono-label leading-relaxed md:text-right">
                   {categoryLabel[category]}
                   <br />
-                  {completedDate.getUTCFullYear()}
+                  <span class:list={[project.data.status !== 'complete' && 'text-accent-ink']}>
+                    {timingTag(project)}
+                  </span>
                 </span>
                 <span class="index-arrow" aria-hidden="true">
                   <svg

@@ -18,7 +18,12 @@ const projects = defineCollection({
         .default([]),
       liveUrl: z.string().url().optional(),
       githubUrl: z.string().url().optional(),
+      // 'active' = in development, 'in-design' = spec stage. Non-complete projects
+      // use completedDate as their last-updated date.
+      status: z.enum(['complete', 'active', 'in-design']).default('complete'),
       completedDate: z.date(),
+      // Homepage order for featured projects (lower first); others follow by date.
+      order: z.number().optional(),
       category: z.enum(['web', 'mobile', 'desktop', 'tools', 'hardware', 'ml', 'engineering']),
     }),
 });

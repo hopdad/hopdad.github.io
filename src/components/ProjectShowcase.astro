@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import StatValue from './StatValue.astro';
-import { categoryLabel, pad, type Project } from '@/lib/projects';
+import { categoryLabel, pad, timingTag, type Project } from '@/lib/projects';
 import { url } from '@/lib/url';
 
 export interface Props {
@@ -11,11 +11,10 @@ export interface Props {
 const { projects } = Astro.props;
 ---
 
-<ol class="showcase">
+<ol class="showcase" style={`--n: ${projects.length}`}>
   {
     projects.map((project, i) => {
-      const { title, description, thumbnail, thumbnailAlt, stats, category, completedDate } =
-        project.data;
+      const { title, description, thumbnail, thumbnailAlt, stats, category } = project.data;
       return (
         <li class="showcase-item" style={`--i: ${i}`} data-stack-item>
           <article class="showcase-card group">
@@ -25,7 +24,7 @@ const { projects } = Astro.props;
                   <span class="text-accent-ink">{pad(i + 1)}</span> / {pad(projects.length)}
                 </span>
                 <span class="whitespace-nowrap">
-                  {categoryLabel[category]} · {completedDate.getUTCFullYear()}
+                  {categoryLabel[category]} · {timingTag(project)}
                 </span>
               </div>
               <h3 class="font-display text-display-lg font-medium [font-variation-settings:'opsz'_144] lg:mt-auto">
@@ -162,7 +161,8 @@ const { projects } = Astro.props;
   @media (min-width: 1024px) {
     .showcase-card {
       grid-template-columns: 5fr 7fr;
-      min-height: min(36rem, calc(100vh - 11rem));
+      /* Tall enough to feel like a spread, short enough that the last card in the stack fits. */
+      min-height: min(36rem, calc(100vh - 7rem - (var(--n, 4) - 1) * 1.25rem));
     }
     .showcase-art {
       order: 0;
