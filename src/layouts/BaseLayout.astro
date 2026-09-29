@@ -14,9 +14,10 @@ export interface Props {
   image?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
 }
 
-const { title, description, image, type, jsonLd } = Astro.props;
+const { title, description, image, type, jsonLd, noindex } = Astro.props;
 ---
 
 <!doctype html>
@@ -30,7 +31,14 @@ const { title, description, image, type, jsonLd } = Astro.props;
     <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={frauncesItalicUrl} as="font" type="font/woff2" crossorigin />
 
-    <SEO title={title} description={description} image={image} type={type} jsonLd={jsonLd} />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      jsonLd={jsonLd}
+      noindex={noindex}
+    />
 
     <script is:inline>
       // No-flash theme (dark by default) + a `js` flag for scroll reveals. Runs before first paint.

@@ -13,7 +13,11 @@ const formatDate = (date: Date) =>
   });
 ---
 
-<BaseLayout title="Blog" description="Field notes on projects, tools, and things I'm learning.">
+<BaseLayout
+  title="Blog"
+  description="Field notes on projects, tools, and things I'm learning."
+  noindex={posts.length === 0}
+>
   <section class="container-wide pb-section pt-36 md:pb-section-lg md:pt-44">
     <p class="eyebrow fade-up" style="--rise-delay: 60">Writing</p>
     <h1 class="mt-6 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]">

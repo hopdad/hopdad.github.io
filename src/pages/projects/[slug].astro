@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StatValue from '@/components/StatValue.astro';
 import { categoryLabel, getProjects, pad, timingDetail, type Project } from '@/lib/projects';
+import { site } from '@/config';
 import { url } from '@/lib/url';
 
 export async function getStaticPaths() {
@@ -43,6 +44,7 @@ const {
 } = project.data;
 
 const timing = timingDetail(project);
+const home = new URL(url('/'), Astro.site).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -53,6 +55,13 @@ const jsonLd = {
   genre: categoryLabel[category],
   keywords: techStack.join(', '),
   url: Astro.url.toString(),
+  author: {
+    '@type': 'Person',
+    '@id': `${home}#person`,
+    name: site.name,
+    alternateName: site.alias,
+    url: home,
+  },
 };
 ---
 

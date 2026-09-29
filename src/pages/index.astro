@@ -15,19 +15,37 @@ import { url } from '@/lib/url';
 const featured = await getFeatured();
 const total = (await getProjects()).length;
 
-const personJsonLd = {
+// WebSite gives Google the site name for results; Person ties the name, the
+// HopDad handle, and the GitHub profile together.
+const home = new URL(url('/'), Astro.site).toString();
+const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  jobTitle: site.title,
-  email: `mailto:${site.email}`,
-  url: Astro.site?.toString(),
-  address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' },
-  sameAs: [site.social.github, site.social.linkedin].filter(Boolean),
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${home}#website`,
+      url: home,
+      name: site.name,
+      alternateName: site.alias,
+      author: { '@id': `${home}#person` },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${home}#person`,
+      name: site.name,
+      alternateName: site.alias,
+      jobTitle: site.title,
+      description: site.description,
+      email: `mailto:${site.email}`,
+      url: home,
+      address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' },
+      sameAs: [site.social.github, site.social.linkedin].filter(Boolean),
+    },
+  ],
 };
 ---
 
-<BaseLayout jsonLd={personJsonLd}>
+<BaseLayout jsonLd={jsonLd}>
   <Hero />
   <Marquee />
   <Stats />

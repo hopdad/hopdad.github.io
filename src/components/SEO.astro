@@ -10,6 +10,8 @@ export interface Props {
   canonical?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
+  /** Keep the page out of search results (and skip its canonical). */
+  noindex?: boolean;
 }
 
 const {
@@ -19,9 +21,12 @@ const {
   canonical,
   type = 'website',
   jsonLd,
+  noindex = false,
 } = Astro.props;
 
-const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.title}`;
+const pageTitle = title
+  ? `${title} — ${site.name}`
+  : `${site.name} (${site.alias}) — ${site.title}`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL(image, Astro.site).toString();
 const isDefaultImage = image === DEFAULT_IMAGE;
@@ -32,7 +37,12 @@ const imageAlt = isDefaultImage
 
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonicalUrl} />
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
+{
+  site.googleSiteVerification && (
+    <meta name="google-site-verification" content={site.googleSiteVerification} />
+  )
+}
 
 <meta property="og:type" content={type} />
 <meta property="og:title" content={pageTitle} />
