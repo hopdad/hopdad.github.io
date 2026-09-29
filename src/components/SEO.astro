@@ -6,7 +6,9 @@ const DEFAULT_IMAGE = '/og-default.png';
 export interface Props {
   title?: string;
   description?: string;
-  image?: string;
+  /** A public path, or an imported image (e.g. a project's share card). */
+  image?: string | ImageMetadata;
+  imageAlt?: string;
   canonical?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
@@ -18,6 +20,7 @@ const {
   title,
   description = site.description,
   image = DEFAULT_IMAGE,
+  imageAlt: imageAltProp,
   canonical,
   type = 'website',
   jsonLd,
@@ -28,11 +31,20 @@ const pageTitle = title
   ? `${title} — ${site.name}`
   : `${site.name} (${site.alias}) — ${site.title}`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
-const ogImage = new URL(image, Astro.site).toString();
-const isDefaultImage = image === DEFAULT_IMAGE;
-const imageAlt = isDefaultImage
-  ? `${site.name}: “Some problems need Python. Others need a torque wrench.” over a topographic map.`
-  : pageTitle;
+const imageSrc = typeof image === 'string' ? image : image.src;
+const ogImage = new URL(imageSrc, Astro.site).toString();
+const isDefaultImage = imageSrc === DEFAULT_IMAGE;
+const imageSize =
+  typeof image !== 'string'
+    ? { width: image.width, height: image.height }
+    : isDefaultImage
+      ? { width: 1200, height: 630 }
+      : undefined;
+const imageAlt =
+  imageAltProp ??
+  (isDefaultImage
+    ? `${site.name}: “Some problems need Python. Others need a torque wrench.” over a topographic map.`
+    : pageTitle);
 ---
 
 <title>{pageTitle}</title>
@@ -50,8 +62,8 @@ const imageAlt = isDefaultImage
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:alt" content={imageAlt} />
-{isDefaultImage && <meta property="og:image:width" content="1200" />}
-{isDefaultImage && <meta property="og:image:height" content="630" />}
+{imageSize && <meta property="og:image:width" content={String(imageSize.width)} />}
+{imageSize && <meta property="og:image:height" content={String(imageSize.height)} />}
 <meta property="og:site_name" content={site.name} />
 
 <meta name="twitter:card" content="summary_large_image" />

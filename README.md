@@ -64,8 +64,8 @@ src/
 
 ## Customizing
 
-1. Edit `src/config.ts` — name, tagline, email, socials, nav. Set `social.linkedin` to your
-   profile URL and LinkedIn links appear in the header menu, contact section, and footer.
+1. Edit `src/config.ts` — name, tagline, email, socials, nav. LinkedIn links appear in the
+   header menu, contact section, and footer while `social.linkedin` is set.
 2. Add projects under `src/content/projects/`. Frontmatter supports up to four headline `stats`:
 
    ```yaml
@@ -81,7 +81,16 @@ src/
    last-updated date.
 
 3. Illustrations live in `src/assets/projects/` at 1200×800. On the homepage they're cropped to
-   fit the card, so keep the important parts between x≈220 and x≈980.
+   fit the card, so keep the important parts between x≈220 and x≈980. Each project also has a
+   1200×630 share card in `src/assets/og/` (title plus illustration) used when a project link is
+   posted on LinkedIn, in texts, and so on. After changing a project's title, status, or
+   illustration, regenerate them:
+
+   ```sh
+   npm i --no-save playwright && npx playwright install chromium
+   node scripts/og-cards.mjs          # or: node scripts/og-cards.mjs titan fishcast
+   ```
+
 4. Write blog posts in `src/content/blog/`. The Blog nav link shows up automatically once a
    published post exists.
 5. `public/og-default.png` (1200×630) is the social-sharing image; `public/favicon.svg` is the
@@ -103,8 +112,7 @@ To get it into Google:
 3. Under **Sitemaps**, submit `sitemap-index.xml`. Then run **URL inspection** on the home page
    and click **Request indexing**.
 4. Link to the site from the places people already find you — the **Website** field on your
-   GitHub profile, LinkedIn (add it to `site.social.linkedin` too), and anywhere you post as
-   HopDad.
+   GitHub profile, your LinkedIn profile, and anywhere you post as HopDad.
 
 [Bing Webmaster Tools](https://www.bing.com/webmasters) can import the Search Console property,
 which covers Bing, DuckDuckGo, and Yahoo.
