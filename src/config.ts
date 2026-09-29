@@ -12,7 +12,7 @@ export const site = {
     'Derrick Hopson (HopDad) is a Michigan engineer and builder with 15+ years of hands-on problem solving — machine-learning platforms, operations software, custom electronics, engine rebuilds, and warehouse process optimization.',
   // Google Search Console → Add property (URL prefix) → HTML tag: paste only the
   // content="…" value here, deploy, then click Verify.
-  googleSiteVerification: '',
+  googleSiteVerification: 'TVoQKsjZKAdLnd7t-WAmN_1wOIPw1jvoLVUPiH3afmg',
   social: {
     github: 'https://github.com/hopdad',
     // Add your LinkedIn profile URL to show LinkedIn links across the site.
