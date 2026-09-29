@@ -15,8 +15,8 @@ export const site = {
   googleSiteVerification: 'TVoQKsjZKAdLnd7t-WAmN_1wOIPw1jvoLVUPiH3afmg',
   social: {
     github: 'https://github.com/hopdad',
-    // Add your LinkedIn profile URL to show LinkedIn links across the site.
-    linkedin: '',
+    // Shown in the header menu, contact section, and footer; leave empty to hide.
+    linkedin: 'https://www.linkedin.com/in/derrick-hopson-62b3b651',
   },
   nav: [
     { href: '/projects', label: 'Work' },

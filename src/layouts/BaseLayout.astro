@@ -11,13 +11,14 @@ import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-lati
 export interface Props {
   title?: string;
   description?: string;
-  image?: string;
+  image?: string | ImageMetadata;
+  imageAlt?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
   noindex?: boolean;
 }
 
-const { title, description, image, type, jsonLd, noindex } = Astro.props;
+const { title, description, image, imageAlt, type, jsonLd, noindex } = Astro.props;
 ---
 
 <!doctype html>
@@ -35,6 +36,7 @@ const { title, description, image, type, jsonLd, noindex } = Astro.props;
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
       type={type}
       jsonLd={jsonLd}
       noindex={noindex}

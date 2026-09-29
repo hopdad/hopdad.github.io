@@ -44,6 +44,12 @@ const {
 } = project.data;
 
 const timing = timingDetail(project);
+
+// Share cards from scripts/og-cards.mjs; pages without one use the default image.
+const shareCards = import.meta.glob<{ default: ImageMetadata }>('/src/assets/og/*.jpg', {
+  eager: true,
+});
+const shareCard = shareCards[`/src/assets/og/${project.slug}.jpg`]?.default;
 const home = new URL(url('/'), Astro.site).toString();
 
 const jsonLd = {
@@ -65,7 +71,14 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} type="article" jsonLd={jsonLd}>
+<BaseLayout
+  title={title}
+  description={description}
+  image={shareCard}
+  imageAlt={shareCard && `${title}, by ${site.name}: ${project.data.thumbnailAlt}`}
+  type="article"
+  jsonLd={jsonLd}
+>
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
 
   <article>
