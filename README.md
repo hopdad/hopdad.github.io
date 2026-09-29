@@ -87,6 +87,28 @@ src/
 5. `public/og-default.png` (1200×630) is the social-sharing image; `public/favicon.svg` is the
    tab icon.
 
+## Search
+
+The site ships what search engines look for: page titles led by your name (the home page adds
+`site.alias`, "HopDad"), descriptions, canonical URLs, `sitemap-index.xml`, a `robots.txt` that
+points to it, and structured data naming the site and linking Derrick Hopson, HopDad, and the
+GitHub profile. The 404 page, and the blog until it has posts, are kept out of the index.
+
+To get it into Google:
+
+1. In [Google Search Console](https://search.google.com/search-console), add a **URL prefix**
+   property for `https://hopdad.github.io/` and pick the **HTML tag** method.
+2. Copy the `content="…"` value into `googleSiteVerification` in `src/config.ts`, merge to
+   `main`, wait for the deploy, then click **Verify**.
+3. Under **Sitemaps**, submit `sitemap-index.xml`. Then run **URL inspection** on the home page
+   and click **Request indexing**.
+4. Link to the site from the places people already find you — the **Website** field on your
+   GitHub profile, LinkedIn (add it to `site.social.linkedin` too), and anywhere you post as
+   HopDad.
+
+[Bing Webmaster Tools](https://www.bing.com/webmasters) can import the Search Console property,
+which covers Bing, DuckDuckGo, and Yahoo.
+
 ## Deployment
 
 The site deploys to GitHub Pages on every push to `main`. The repo is
