@@ -1,5 +1,5 @@
 // @ts-check
-import { readdirSync, readFileSync } from 'node:fs';
+import { copyFileSync, readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
@@ -27,6 +27,16 @@ export default defineConfig({
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap({ filter: (page) => hasPublishedPosts || !page.endsWith('/blog/') }),
+    // @astrojs/sitemap writes sitemap-index.xml; also serve it at /sitemap.xml, the address
+    // people and tools try first. Runs after the sitemap integration's own build hook.
+    {
+      name: 'sitemap-xml-alias',
+      hooks: {
+        'astro:build:done': ({ dir }) => {
+          copyFileSync(new URL('sitemap-index.xml', dir), new URL('sitemap.xml', dir));
+        },
+      },
+    },
     mdx(),
   ],
   build: {
