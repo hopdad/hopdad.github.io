@@ -11,24 +11,26 @@ import Topo from './Topo.astro';
   <Topo seed={7} interactive class="hero-map absolute inset-0 -z-10" />
 
   <div class="container-wide flex flex-1 flex-col justify-center pb-12 pt-32 md:pt-36">
-    <p class="eyebrow fade-up" style="--rise-delay: 80">{site.name} — {site.title}</p>
-
-    <h1
-      id="hero-title"
-      class="mt-8 font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]"
-    >
-      <span class="clip-line">
-        <span class="rise" style="--rise-delay: 160">Some problems need <em>Python.</em></span>
-      </span>
-      <span class="clip-line">
-        <span class="rise" style="--rise-delay: 300"
-          >Others need a <em>torque&nbsp;wrench.</em></span
-        >
+    <!-- The name sits inside the h1 (as the small kicker) so the page's main heading says who
+         it's about, which helps searches for the name. -->
+    <h1 id="hero-title">
+      <span class="eyebrow fade-up flex" style="--rise-delay: 80">{site.name} — {site.title}</span>
+      <span
+        class="mt-8 block font-display text-display-2xl font-medium [font-variation-settings:'opsz'_144]"
+      >
+        <span class="clip-line">
+          <span class="rise" style="--rise-delay: 160">Some problems need <em>Python.</em></span>
+        </span>
+        <span class="clip-line">
+          <span class="rise" style="--rise-delay: 300"
+            >Others need a <em>torque&nbsp;wrench.</em></span
+          >
+        </span>
       </span>
     </h1>
 
     <p class="fade-up mt-8 max-w-[40rem] text-body-lg text-muted" style="--rise-delay: 560">
-      I’m Derrick — 15+ years solving problems on the floor of one of Michigan’s largest
+      I’m Derrick Hopson — 15+ years solving problems on the floor of one of Michigan’s largest
       distribution centers, and a builder of machine-learning platforms, operations software, custom
       electronics, and ground-up engine rebuilds. Different materials, same method: <span
         class="text-ink">understand it, plan it, build it right.</span
